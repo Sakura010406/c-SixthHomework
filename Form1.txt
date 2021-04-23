@@ -1,0 +1,240 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using CsForthHomework;
+
+namespace CsFifthHomework
+{
+  
+    public partial class Form1 : Form
+    {
+        public List<Order> m_List = new List<Order>();
+
+        public static int m_SumOrder;
+
+       public Form1()
+       {
+          InitializeComponent();
+
+            this.m_List.Clear();
+
+            timer1.Interval = 1000;
+
+            timer1.Start();
+        }
+        public Form1(int sumOrder,List<Order> list)
+        {
+            InitializeComponent();
+
+            m_SumOrder = sumOrder;
+
+            this.m_List.Clear();
+
+            foreach (Order o in list)
+            {
+                this.m_List.Add(o);
+            }
+
+            timer1.Interval = 1000;
+
+            timer1.Start();
+        }
+
+
+        public Form1(List<Order> list)
+        {
+            InitializeComponent();
+
+            this.m_List.Clear();
+
+            foreach (Order o in list)
+            {
+                this.m_List.Add(o);
+            }
+
+            timer1.Interval = 1000;
+
+            timer1.Start();
+
+        }
+
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+        
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            MessageBoxButtons messButton = MessageBoxButtons.OKCancel;
+
+            DialogResult dr = MessageBox.Show("确定要删除该订单吗?", "请选择", messButton);
+
+            if (dr == DialogResult.OK)
+            {
+                var order = from o in this.m_List
+
+                            where o.m_Id == Convert.ToInt32(textBox1.Text)
+
+                            select o;
+
+                List<Order> list = order.ToList();
+
+                if (list.Count != 0)
+                {
+                    var order1 = from o in this.m_List
+
+                                where o.m_Id != Convert.ToInt32(textBox1.Text)
+
+                                select o;
+
+                    this.m_List.Clear();
+
+                    List<Order> list1 = order.ToList();
+
+                    foreach (Order o in list1)
+                    {
+                        this.m_List.Add(o);
+                    }
+
+                    MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("订单信息不存在！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+            }
+
+            else
+            {
+                MessageBox.Show("删除失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked == true)
+            {
+                Form2 f2 = new Form2(this.m_List);
+
+                f2.ShowDialog();
+
+                this.Hide();
+
+            }
+            else if (radioButton2.Checked == true)
+            {
+                Form3 f3 = new Form3(this.m_List);
+
+                f3.ShowDialog();
+
+                this.Hide();
+            }
+            else
+            {
+                Form4 f4 = new Form4(this.m_List);
+
+                f4.ShowDialog();
+
+                this.Hide();
+            }
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            label1.Text = "";
+
+            var order = from o in this.m_List
+
+                        where o.m_Id == Convert.ToInt32(textBox1.Text)
+
+                        select o;
+
+            List<Order> list = order.ToList();
+
+            if (list.Count!=0)
+            {
+                foreach (Order o in list)
+                {
+                    label1.Text = o.ToString();
+                }
+            }
+            else
+            {
+                MessageBox.Show("订单信息不存在！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            label6.Text = DateTime.Now.ToString();
+        }
+    }
+}
