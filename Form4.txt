@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using CsForthHomework;
+
+namespace CsFifthHomework
+{
+    public partial class Form4 : Form
+    {
+        List<Order> m_List = new List<Order>();
+
+        public Form4(List<Order> list)
+        {
+            InitializeComponent();
+
+            this.m_List.Clear();
+
+            foreach (Order o in list)
+            {
+                this.m_List.Add(o);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1(this.m_List);
+
+            form1.Show();
+
+            this.Close();
+        }
+        public void Sort(List<Order> list)
+        {          
+            if (radioButton1.Checked == true)
+            {
+                list.Sort((o1, o2) => o1.m_Id - o2.m_Id);
+
+            }
+            else if (radioButton2.Checked == true)
+            {
+                list.Sort((o1, o2) => (int)(o1.m_Pay - o2.m_Pay));
+
+            }
+            else
+            {
+                list.Sort((o1, o2) => DateTime.Compare(o1.m_Od.m_OrderTime, o2.m_Od.m_OrderTime));
+            }
+
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            if (this.m_List.Count != 0)
+            {
+                this.Sort(this.m_List);
+
+                string str = "";
+                   
+                foreach (Order o in this.m_List)
+                {                   
+                  str += o .ToString()+"\t\n" ; 
+                }
+
+                label2.Text = str;
+
+                MessageBox.Show("显示成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("订单信息为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
